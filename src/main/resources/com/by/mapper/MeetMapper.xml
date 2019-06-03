@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.by.mapper.MeetMapper" >
+  <resultMap id="BaseResultMap" type="com.by.model.Meet" >
+    <id column="meet_id" property="meetId" jdbcType="INTEGER" />
+    <result column="meet_name" property="meetName" jdbcType="VARCHAR" />
+    <result column="meet_number" property="meetNumber" jdbcType="INTEGER" />
+    <result column="meet_date" property="meetDate" jdbcType="TIMESTAMP" />
+    <result column="meet_img" property="meetImg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    meet_id, meet_name, meet_number, meet_date, meet_img
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_meeting
+    where meet_id = #{meetId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_meeting
+    where meet_id = #{meetId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.by.model.Meet" >
+    insert into t_meeting (meet_id, meet_name, meet_number, 
+      meet_date, meet_img)
+    values (#{meetId,jdbcType=INTEGER}, #{meetName,jdbcType=VARCHAR}, #{meetNumber,jdbcType=INTEGER}, 
+      #{meetDate,jdbcType=TIMESTAMP}, #{meetImg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.by.model.Meet" >
+    insert into t_meeting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="meetId != null" >
+        meet_id,
+      </if>
+      <if test="meetName != null" >
+        meet_name,
+      </if>
+      <if test="meetNumber != null" >
+        meet_number,
+      </if>
+      <if test="meetDate != null" >
+        meet_date,
+      </if>
+      <if test="meetImg != null" >
+        meet_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="meetId != null" >
+        #{meetId,jdbcType=INTEGER},
+      </if>
+      <if test="meetName != null" >
+        #{meetName,jdbcType=VARCHAR},
+      </if>
+      <if test="meetNumber != null" >
+        #{meetNumber,jdbcType=INTEGER},
+      </if>
+      <if test="meetDate != null" >
+        #{meetDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meetImg != null" >
+        #{meetImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.by.model.Meet" >
+    update t_meeting
+    <set >
+      <if test="meetName != null" >
+        meet_name = #{meetName,jdbcType=VARCHAR},
+      </if>
+      <if test="meetNumber != null" >
+        meet_number = #{meetNumber,jdbcType=INTEGER},
+      </if>
+      <if test="meetDate != null" >
+        meet_date = #{meetDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meetImg != null" >
+        meet_img = #{meetImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where meet_id = #{meetId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.by.model.Meet" >
+    update t_meeting
+    set meet_name = #{meetName,jdbcType=VARCHAR},
+      meet_number = #{meetNumber,jdbcType=INTEGER},
+      meet_date = #{meetDate,jdbcType=TIMESTAMP},
+      meet_img = #{meetImg,jdbcType=VARCHAR}
+    where meet_id = #{meetId,jdbcType=INTEGER}
+  </update>
+
+  <!--List<Meet> list();-->
+  <select id="list" resultType="meet">
+    select * from t_meeting
+  </select>
+
+</mapper>
